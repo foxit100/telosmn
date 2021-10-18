@@ -522,8 +522,8 @@ echo "${ALIAS}_reindex"
 fi
 fi
 echo ""
-echo -e "${RED}telosmn.sh${NC} by ${RED}Dawid${NC}"
-echo -e "${RED}Dawid${NC} Transcendence Address for donations: ${GREEN}GLei8pKgjvD16zwTGctoBYgLay1wWff5W9${NC}"
+echo -e "${GREEN}telosmn.sh${NC} by ${GREEN}Dawid${NC}"
+echo -e "${GREEN}Dawid${NC} Transcendence Address for donations: ${GREEN}GLei8pKgjvD16zwTGctoBYgLay1wWff5W9${NC}"
 echo -e "Script version ${GREEN}$scupdate${NC}"
 echo ""
 source .bashrc
