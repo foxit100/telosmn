@@ -3,6 +3,10 @@ cd ~
 
 off=$(curl -s https://raw.githubusercontent.com/foxit100/telosmn/main/off)
 
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m'
+
 if [ $off == "yes" ]; 
 then
 echo ""
@@ -13,10 +17,6 @@ if [[ $EUID -ne 0 ]]; then
    echo -e "${RED}$0 must be run as root.${NC}"
    exit 1
 fi
-
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-NC='\033[0m'
 
 ## Error checks
 
@@ -521,4 +521,5 @@ fi
 echo ""
 echo "telosmn.sh by Dawid"
 echo "Dawid Transcendence Address for donations: GLei8pKgjvD16zwTGctoBYgLay1wWff5W9"
+echo ""
 source .bashrc
