@@ -5,10 +5,10 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'
 
-scupdate=1.0.0
+scupdate="1.0.0"
 
 off=$(curl -s https://raw.githubusercontent.com/foxit100/telosmn/main/off)
-old=$(curl -s https://raw.githubusercontent.com/foxit100/telosmn/main/off)
+old=$(curl -s https://raw.githubusercontent.com/foxit100/telosmn/main/scupdate)
 
 if [ $off == "yes" ]; 
 then
@@ -524,6 +524,6 @@ fi
 echo ""
 echo -e "${RED}telosmn.sh${NC} by ${RED}Dawid${NC}"
 echo -e "${RED}Dawid${NC} Transcendence Address for donations: ${GREEN}GLei8pKgjvD16zwTGctoBYgLay1wWff5W9${NC}"
-echo -e "Script version ${GREEN}1.0.0${NC}"
+echo -e "Script version ${GREEN}$scupdate${NC}"
 echo ""
 source .bashrc
