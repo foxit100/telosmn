@@ -1,16 +1,18 @@
 #!/bin/bash
 cd ~
 
-off=$(curl -s https://raw.githubusercontent.com/foxit100/telosmn/main/off)
-
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'
 
+
+
+off=$(curl -s https://raw.githubusercontent.com/foxit100/telosmn/main/off)
+
 if [ $off == "yes" ]; 
 then
 echo ""
-echo -e "${RED}Telos masternode installer script is currently disabled because parameters are being updated, please try again later!.${NC}"
+echo -e "${RED}Telos masternode installer script is currently disabled because parameters are being updated, please try again later!${NC}"
 else
 
 if [[ $EUID -ne 0 ]]; then
@@ -519,7 +521,8 @@ echo "${ALIAS}_reindex"
 fi
 fi
 echo ""
-echo "telosmn.sh by Dawid"
-echo "Dawid Transcendence Address for donations: GLei8pKgjvD16zwTGctoBYgLay1wWff5W9"
+echo -e "${RED}telosmn.sh${NC} by ${RED}Dawid${NC}"
+echo -e "${RED}Dawid${NC} Transcendence Address for donations: ${GREEN}GLei8pKgjvD16zwTGctoBYgLay1wWff5W9${NC}"
+echo -e "Script version ${GREEN}1.0.0${NC}"
 echo ""
 source .bashrc
