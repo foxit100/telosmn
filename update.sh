@@ -5,7 +5,7 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'
 
-if [ ! -f telosmn.sh ]
+if [ == -f telosmn.sh ]
 then
 rm telosmn.sh >/dev/null 2>&1
 sleep 2
