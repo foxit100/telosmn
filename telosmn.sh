@@ -7,8 +7,8 @@ NC='\033[0m'
 
 scupdate="1.0.0"
 
-off=$(curl -s https://raw.githubusercontent.com/foxit100/telosmn/main/off)
-old=$(curl -s https://raw.githubusercontent.com/foxit100/telosmn/main/scupdate)
+off=$(curl -s https://raw.githubusercontent.com/foxit100/telosmn/main/off?token=AM32PA4CDWVUIFXP4WLYPNTBNWQJI)
+old=$(curl -s https://raw.githubusercontent.com/foxit100/telosmn/main/scupdate?token=AM32PA4CDWVUIFXP4WLYPNTBNWQJI)
 
 if [ $off == "yes" ]; 
 then
@@ -77,9 +77,9 @@ DELETED="$(cat /root/bin/deleted 2>/dev/null | wc -l)"
 ALIASES="$(find /root/.transcendence_* -maxdepth 0 -type d 2>/dev/null | cut -c22-)"
 face="$(lshw -C network | grep "logical name:" | sed -e 's/logical name:/logical name: /g' | awk '{print $3}' | head -n1)"
 IP4=$(curl -s4 api.ipify.org)
-version=$(curl -s https://raw.githubusercontent.com/foxit100/telosmn/main/current)
-link=$(curl -s https://raw.githubusercontent.com/foxit100/telosmn/main/download)
-connections=$(curl -s https://raw.githubusercontent.com/foxit100/telosmn/main/connections)
+version=$(curl -s https://raw.githubusercontent.com/foxit100/telosmn/main/current?token=AM32PA4CDWVUIFXP4WLYPNTBNWQJI)
+link=$(curl -s https://raw.githubusercontent.com/foxit100/telosmn/main/download?token=AM32PA4CDWVUIFXP4WLYPNTBNWQJI)
+connections=$(curl -s https://raw.githubusercontent.com/foxit100/telosmn/main/connections?token=AM32PA4CDWVUIFXP4WLYPNTBNWQJI)
 PORT=8051
 RPCPORTT=8351
 gateway1=$(/sbin/route -A inet6 | grep -v ^fe80 | grep -v ^ff00 | grep -w "$face")
@@ -337,11 +337,11 @@ fi
 
 ## Downloading bootstrap
 
-exists=$(curl -s https://raw.githubusercontent.com/foxit100/telosmn/main/exists_file)
+exists=$(curl -s https://raw.githubusercontent.com/foxit100/telosmn/main/exists_file?token=AM32PA4CDWVUIFXP4WLYPNTBNWQJI)
 
 if [ ! -f $exists ]
 then
-boot=$(curl -s https://raw.githubusercontent.com/foxit100/telosmn/main/bootstrap)
+boot=$(curl -s https://raw.githubusercontent.com/foxit100/telosmn/main/bootstrap?token=AM32PA4CDWVUIFXP4WLYPNTBNWQJI)
 $boot
 fi
 
