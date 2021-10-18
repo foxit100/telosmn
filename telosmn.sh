@@ -1,5 +1,14 @@
 #!/bin/bash
 cd ~
+
+off=$(curl -s https://raw.githubusercontent.com/foxit100/telosmn/main/off)
+
+if [ $off == "yes" ]; 
+then
+echo ""
+echo -e "${RED}Telos masternode installer script is currently disabled because parameters are being updated, please try again later!.${NC}"
+else
+
 if [[ $EUID -ne 0 ]]; then
    echo -e "${RED}$0 must be run as root.${NC}"
    exit 1
@@ -67,6 +76,7 @@ face="$(lshw -C network | grep "logical name:" | sed -e 's/logical name:/logical
 IP4=$(curl -s4 api.ipify.org)
 version=$(curl -s https://raw.githubusercontent.com/foxit100/telosmn/main/current)
 link=$(curl -s https://raw.githubusercontent.com/foxit100/telosmn/main/download)
+connections=$(curl -s https://raw.githubusercontent.com/foxit100/telosmn/main/connections)
 PORT=8051
 RPCPORTT=8351
 gateway1=$(/sbin/route -A inet6 | grep -v ^fe80 | grep -v ^ff00 | grep -w "$face")
@@ -182,7 +192,7 @@ fi
 if [ $DO = "help" ]
 then
 echo "Usage:"
-echo "./lobohub.sh Action Alias PrivateKey"
+echo "./telosmn.sh Action Alias PrivateKey"
 fi
 
 ## List aliases
@@ -232,7 +242,7 @@ fi
 
 ## Preparing and building
 
-  git clone https://github.com/phoenixkonsole/transcendence -b 3.0.5
+  git clone https://github.com/phoenixkonsole/transcendence -b $version
   cd transcendence
   ./autogen.sh
   ./configure --with-incompatible-bdb --disable-tests --without-gui
@@ -324,9 +334,12 @@ fi
 
 ## Downloading bootstrap
 
-if [ ! -f bootstrap.zip.001 ]
+exists=$(curl -s https://raw.githubusercontent.com/foxit100/telosmn/main/exists_file)
+
+if [ ! -f $exists ]
 then
-$(curl -s https://raw.githubusercontent.com/foxit100/telosmn/main/bootstrap)
+boot=$(curl -s https://raw.githubusercontent.com/foxit100/telosmn/main/bootstrap)
+$boot
 fi
 
 ## Start of node creation
@@ -352,7 +365,7 @@ RPCPORT=$(($RPCPORTT+$COUNTER))
   CONF_DIR=/root/.transcendence_$ALIAS
   
   mkdir /root/.transcendence_$ALIAS
-  7z x bootstrap.zip.001 -o/root/.transcendence_$ALIAS >/dev/null 2>&1
+  7z x $exists -o/root/.transcendence_$ALIAS >/dev/null 2>&1
   echo '#!/bin/bash' > ~/bin/transcendenced_$ALIAS.sh
   echo "transcendenced -daemon -conf=$CONF_DIR/transcendence.conf -datadir=$CONF_DIR "'$*' >> ~/bin/transcendenced_$ALIAS.sh
   echo '#!/bin/bash' > ~/bin/transcendence-cli_$ALIAS.sh
@@ -381,12 +394,8 @@ RPCPORT=$(($RPCPORTT+$COUNTER))
   echo "masternodeaddr=$IP4:$PORT" >> transcendence.conf_TEMP
   echo "masternodeprivkey=$PRIVKEY" >> transcendence.conf_TEMP
   
-  echo "addnode=195.201.192.117" >> transcendence.conf_TEMP
-  echo "addnode=167.86.99.184" >> transcendence.conf_TEMP
-  echo "addnode=84.226.120.115" >> transcendence.conf_TEMP
-  echo "addnode=89.133.35.56" >> transcendence.conf_TEMP
-  echo "addnode=95.216.152.134" >> transcendence.conf_TEMP
-  echo "addnode=185.144.62.253" >> transcendence.conf_TEMP
+  echo "$connections" >> transcendence.conf_TEMP
+  
   
   mv transcendence.conf_TEMP $CONF_DIR/transcendence.conf
   
@@ -438,7 +447,7 @@ do
   /sbin/ip -6 addr add ${gateway}$COUNTER$MASK dev $face
   mkdir /root/.transcendence_$ALIAS
   
-  7z x bootstrap.zip.001 -o/root/.transcendence_$ALIAS >/dev/null 2>&1
+  7z x $exists -o/root/.transcendence_$ALIAS >/dev/null 2>&1
   echo '#!/bin/bash' > ~/bin/transcendenced_$ALIAS.sh
   echo "transcendenced -daemon -conf=$CONF_DIR/transcendence.conf -datadir=$CONF_DIR "'$*' >> ~/bin/transcendenced_$ALIAS.sh
   echo '#!/bin/bash' > ~/bin/transcendence-cli_$ALIAS.sh
@@ -464,6 +473,9 @@ do
   echo "externalip=[${gateway}$COUNTER]" >> transcendence.conf_TEMP
   echo "masternodeaddr=[${gateway}$COUNTER]:$PORT" >> transcendence.conf_TEMP
   echo "masternodeprivkey=$PRIVKEY" >> transcendence.conf_TEMP
+  
+  echo "$connections" >> transcendence.conf_TEMP
+  
   mv transcendence.conf_TEMP $CONF_DIR/transcendence.conf
   
   crontab -l -u root | grep -v start_nodes.sh | crontab -u root -
@@ -505,8 +517,8 @@ echo "${ALIAS}_getpeerinfo"
 echo "${ALIAS}_resync"
 echo "${ALIAS}_reindex"
 fi
-
+fi
 echo ""
-echo "telosmn by Dawid blatantly stolen from lobo & xispita in the name of the Transcendence community "
+echo "telosmn.sh by Dawid"
 echo "Dawid Transcendence Address for donations: GLei8pKgjvD16zwTGctoBYgLay1wWff5W9"
 source .bashrc
