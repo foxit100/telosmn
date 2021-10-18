@@ -16,3 +16,5 @@ rm update.sh >/dev/null 2>&1
 clear
 ./telosmn.sh
 fi
+echo ""
+echo "cos tam !"
