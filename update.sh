@@ -15,6 +15,7 @@ sleep 3
 rm update.sh >/dev/null 2>&1
 clear
 ./telosmn.sh
-fi
+else
 echo ""
-echo "cos tam !"
+echo "Skrypt nie działa !"
+fi
