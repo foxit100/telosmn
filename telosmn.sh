@@ -5,8 +5,6 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'
 
-
-
 off=$(curl -s https://raw.githubusercontent.com/foxit100/telosmn/main/off)
 
 if [ $off == "yes" ]; 
