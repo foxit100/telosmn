@@ -65,8 +65,8 @@ DELETED="$(cat /root/bin/deleted 2>/dev/null | wc -l)"
 ALIASES="$(find /root/.transcendence_* -maxdepth 0 -type d 2>/dev/null | cut -c22-)"
 face="$(lshw -C network | grep "logical name:" | sed -e 's/logical name:/logical name: /g' | awk '{print $3}' | head -n1)"
 IP4=$(curl -s4 api.ipify.org)
-version=3.0.5
-link=https://github.com/phoenixkonsole/transcendence/releases/download/3.05/305_linux_x64.zip
+version=$(curl -s https://raw.githubusercontent.com/foxit100/telosmn/main/current)
+link=$(curl -s https://raw.githubusercontent.com/foxit100/telosmn/main/download)
 PORT=8051
 RPCPORTT=8351
 gateway1=$(/sbin/route -A inet6 | grep -v ^fe80 | grep -v ^ff00 | grep -w "$face")
@@ -326,7 +326,7 @@ fi
 
 if [ ! -f bootstrap.zip.001 ]
 then
-wget https://github.com/ZenH2O/001/releases/download/Latest/bootstrap.zip.001 && wget https://github.com/ZenH2O/001/releases/download/Latest/bootstrap.zip.002 && wget https://github.com/ZenH2O/001/releases/download/Latest/bootstrap.zip.003
+$(curl -s https://raw.githubusercontent.com/foxit100/telosmn/main/bootstrap)
 fi
 
 ## Start of node creation
@@ -438,7 +438,7 @@ do
   /sbin/ip -6 addr add ${gateway}$COUNTER$MASK dev $face
   mkdir /root/.transcendence_$ALIAS
   
-  unzip bootstrap.zip -d ~/.transcendence_$ALIAS >/dev/null 2>&1
+  7z x bootstrap.zip.001 -o/root/.transcendence_$ALIAS >/dev/null 2>&1
   echo '#!/bin/bash' > ~/bin/transcendenced_$ALIAS.sh
   echo "transcendenced -daemon -conf=$CONF_DIR/transcendence.conf -datadir=$CONF_DIR "'$*' >> ~/bin/transcendenced_$ALIAS.sh
   echo '#!/bin/bash' > ~/bin/transcendence-cli_$ALIAS.sh
