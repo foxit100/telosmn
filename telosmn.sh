@@ -5,17 +5,6 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'
 
-scupdate="1.0.0"
-
-off=$(curl -s https://raw.githubusercontent.com/foxit100/telosmn/main/off)
-old=$(curl -s https://raw.githubusercontent.com/foxit100/telosmn/main/scupdate)
-
-if [ $off == "yes" ]; 
-then
-echo ""
-echo -e "${RED}Telos masternode installer script is currently disabled because parameters are being updated, please try again later!${NC}"
-else
-
 if [[ $EUID -ne 0 ]]; then
    echo -e "${RED}$0 must be run as root.${NC}"
    exit 1
@@ -28,6 +17,17 @@ perl -i -ne 'print if ! $a{$_}++' /etc/network/interfaces
 if [ ! -d "/root/bin" ]; then
 mkdir /root/bin
 fi
+
+scupdate="1.0.0"
+
+off=$(curl -s https://raw.githubusercontent.com/foxit100/telosmn/main/off)
+old=$(curl -s https://raw.githubusercontent.com/foxit100/telosmn/main/scupdate)
+
+if [ $off == "yes" ]; 
+then
+echo ""
+echo -e "${RED}Telos masternode installer script is currently disabled because parameters are being updated, please try again later!${NC}"
+else
 
 ## Setup
 
