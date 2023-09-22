@@ -7,7 +7,7 @@ NC='\033[0m'
 
 scupdate="1.0.0"
 
-off=$(curl -s https://raw.githubusercontent.com/foxit100/telosmn/main/off
+off=$(curl -s https://raw.githubusercontent.com/foxit100/telosmn/main/off)
 old=$(curl -s https://raw.githubusercontent.com/foxit100/telosmn/main/scupdate)
 
 if [ $off == "yes" ]; 
